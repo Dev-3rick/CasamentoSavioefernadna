@@ -114,12 +114,13 @@
   var IGREJA = { name: 'Santuário de São João Batista', lat: -19.9454687, lng: -43.487551, pid: 'ChIJEYKZ59k3pAARlE9CPQ885sg' };
   var FESTA = { name: 'Rancho Coyote', lat: -19.9131134, lng: -43.4552026, pid: 'ChIJwZF2e5pJpAARABYKZubaoVM' };
   var HOTEIS = [
-    { name: 'Impar Suítes', city: 'Barão de Cocais', addr: 'Av. Hortelina de Lima e Souza, 302 — Cidade Nova', lat: -19.9384517, lng: -43.472908, pid: 'ChIJicb_Ns9JpAARu4HScyOV2Qk' },
-    { name: 'Estância Peti Pousada', city: 'Barão de Cocais', addr: 'Zona rural de Barão de Cocais', lat: -19.9071691, lng: -43.4401477, pid: 'ChIJ8azDU9FLpAARZxpwjm9-7tI' },
-    { name: 'Hotel Real', city: 'Barão de Cocais', addr: 'R. Conceição Caldeira, 11 — Progresso', lat: -19.9353654, lng: -43.4763662, pid: 'ChIJu-sZdC1IpAARfYbHGQx-YlA' },
-    { name: 'Hotel Senhor do Barão', city: 'Barão de Cocais', addr: 'R. Dr. Antônio Soeiro, 13 — Vila Regina', lat: -19.9402411, lng: -43.478769, pid: 'ChIJMSE30CxIpAARD4XgDbirTvw' },
-    { name: 'Pousada & Restaurante Vila Cocais', city: 'Cocais · Barão de Cocais', addr: 'R. Aristides Augusto da Fonseca, 270 — Cocais', lat: -19.8632235, lng: -43.4544435, pid: 'ChIJ-20YgN5KpAARSxdacSiRggk' }
+    { name: 'Impar Suítes', phone: '(31) 3860-2300', city: 'Barão de Cocais', addr: 'Av. Hortelina de Lima e Souza, 302 — Cidade Nova', lat: -19.9384517, lng: -43.472908, pid: 'ChIJicb_Ns9JpAARu4HScyOV2Qk' },
+    { name: 'Estância Peti Pousada', phone: '(31) 99589-2425', city: 'Barão de Cocais', addr: 'Zona rural de Barão de Cocais', lat: -19.9071691, lng: -43.4401477, pid: 'ChIJ8azDU9FLpAARZxpwjm9-7tI' },
+    { name: 'Hotel Real', phone: '(31) 3837-1726', city: 'Barão de Cocais', addr: 'R. Conceição Caldeira, 11 — Progresso', lat: -19.9353654, lng: -43.4763662, pid: 'ChIJu-sZdC1IpAARfYbHGQx-YlA' },
+    { name: 'Hotel Senhor do Barão', phone: '(31) 3837-1345', city: 'Barão de Cocais', addr: 'R. Dr. Antônio Soeiro, 13 — Vila Regina', lat: -19.9402411, lng: -43.478769, pid: 'ChIJMSE30CxIpAARD4XgDbirTvw' },
+    { name: 'Pousada & Restaurante Vila Cocais', phone: '(31) 99867-1919', city: 'Cocais · Barão de Cocais', addr: 'R. Aristides Augusto da Fonseca, 270 — Cocais', lat: -19.8632235, lng: -43.4544435, pid: 'ChIJ-20YgN5KpAARSxdacSiRggk' }
   ];
+  function telUrl(p) { return 'tel:+55' + p.replace(/\D/g, ''); }
   function km(a, b) {
     var R = 6371, toR = Math.PI / 180, dLat = (b.lat - a.lat) * toR, dLng = (b.lng - a.lng) * toR;
     var h = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(a.lat * toR) * Math.cos(b.lat * toR) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
@@ -155,7 +156,8 @@
       var links = el('span', 'hotel-links');
       var a1 = el('a', null, 'Ver local'); a1.href = placeUrl(h); a1.target = '_blank'; a1.rel = 'noopener';
       var a2 = el('a', null, 'Rota até a festa'); a2.href = routeUrl(h, FESTA); a2.target = '_blank'; a2.rel = 'noopener';
-      [a1, a2].forEach(function (a) { a.addEventListener('click', function (e) { e.stopPropagation(); }); links.appendChild(a); });
+      var a3 = el('a', 'tel', 'Ligar ' + h.phone); a3.href = telUrl(h.phone);
+      [a1, a2, a3].forEach(function (a) { a.addEventListener('click', function (e) { e.stopPropagation(); }); links.appendChild(a); });
       t.appendChild(links);
       card.appendChild(t);
       function pick() { focusHotel(h); }
@@ -183,7 +185,7 @@
   function initMap() {
     if (typeof L === 'undefined') { $('map-fallback').textContent = 'Não foi possível carregar o mapa. Use os links “Ver local” e “Rota”.'; return; }
     $('map-fallback').hidden = true;
-    map = L.map('mapa', { scrollWheelZoom: false, zoomControl: true });
+    map = L.map('mapa', { scrollWheelZoom: false, zoomControl: true, attributionControl: false });
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
       maxZoom: 16,
       attribution: 'Base &copy; Esri &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap'
@@ -197,7 +199,7 @@
       .bindPopup('<strong>' + FESTA.name + '</strong><br>Recepção<br><a href="' + placeUrl(FESTA) + '" target="_blank" rel="noopener">Ver no Google Maps</a>');
     HOTEIS.forEach(function (h) {
       var m = L.marker([h.lat, h.lng], { icon: pinIcon('pin-hotel', String(h.n), 20), title: h.name }).addTo(map);
-      m.bindPopup('<strong>' + h.name + '</strong><br>' + h.city + '<br>' + fmtKm(h.dIgreja) + ' da igreja · ' + fmtKm(h.dFesta) + ' da festa<br><a href="' + routeUrl(h, FESTA) + '" target="_blank" rel="noopener">Rota até a festa</a>');
+      m.bindPopup('<strong>' + h.name + '</strong><br>' + h.city + '<br>' + fmtKm(h.dIgreja) + ' da igreja · ' + fmtKm(h.dFesta) + ' da festa<br><a href="' + routeUrl(h, FESTA) + '" target="_blank" rel="noopener">Rota até a festa</a><br><a href="' + telUrl(h.phone) + '">Ligar ' + h.phone + '</a>');
       m.on('click', function () { activeHotel = h.n; renderStayList(); });
       hotelMarkers[h.n] = m;
     });

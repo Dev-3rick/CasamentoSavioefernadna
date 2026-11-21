@@ -172,7 +172,7 @@ section{scroll-margin-top:80px}
 .hotel-name{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:500;line-height:1.2;color:var(--ink)}
 .hotel-city{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--sage)}
 .hotel-dist{font-size:13px;color:var(--muted);line-height:1.5}
-.hotel-links{display:flex;gap:16px;margin-top:6px;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+.hotel-links{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:6px;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
 .hotel-links a{text-decoration:none;color:var(--gold-dark)}
 .hotel-links a:hover{text-decoration:underline}
 .map-box{position:relative;min-height:460px;border:1px solid var(--line);background:var(--beige);overflow:hidden}
@@ -328,3 +328,6 @@ fieldset.field legend{margin-bottom:8px}
   .place{padding:30px 22px}
 }
 @media (prefers-reduced-motion:reduce){.marquee-track{animation:none}html{scroll-behavior:auto}}
+
+.map-credit{display:block;margin-top:6px;font-size:10px;opacity:.75}
+.hotel-links a.tel{text-transform:none;letter-spacing:.04em;font-weight:500}
