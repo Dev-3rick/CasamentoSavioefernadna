@@ -118,6 +118,8 @@
   var HOTEIS = [
     { name: 'Impar Suítes', city: 'Barão de Cocais', addr: 'Av. Hortelina de Lima e Souza, 302 — Cidade Nova', lat: -19.9384517, lng: -43.472908, pid: 'ChIJicb_Ns9JpAARu4HScyOV2Qk' },
     { name: 'Estância Peti Pousada', city: 'Barão de Cocais', addr: 'Zona rural de Barão de Cocais', lat: -19.9071691, lng: -43.4401477, pid: 'ChIJ8azDU9FLpAARZxpwjm9-7tI' },
+    { name: 'Hotel Real', city: 'Barão de Cocais', addr: 'R. Conceição Caldeira, 11 — Progresso', lat: -19.9353654, lng: -43.4763662, pid: 'ChIJu-sZdC1IpAARfYbHGQx-YlA' },
+    { name: 'Hotel Senhor do Barão', city: 'Barão de Cocais', addr: 'R. Dr. Antônio Soeiro, 13 — Vila Regina', lat: -19.9402411, lng: -43.478769, pid: 'ChIJMSE30CxIpAARD4XgDbirTvw' },
     { name: 'Pousada & Restaurante Vila Cocais', city: 'Cocais · Barão de Cocais', addr: 'R. Aristides Augusto da Fonseca, 270 — Cocais', lat: -19.8632235, lng: -43.4544435, pid: 'ChIJ-20YgN5KpAARSxdacSiRggk' }
   ];
   function km(a, b) {
@@ -266,7 +268,7 @@
     GIFTS.filter(function (g) { return filter === 'Todos' || g.cat === filter; }).forEach(function (g) {
       var art = el('article', 'gift');
       var img = el('div', 'gift-img');
-      img.appendChild(icon(g.icon, 64, '#A6864E', 1));
+      img.appendChild(icon(g.icon, 64, '#9A7352', 1));
       img.appendChild(el('span', 'gift-cat', g.cat));
       art.appendChild(img);
       var body = el('div', 'gift-body');
