@@ -201,7 +201,7 @@
   }
   function fitMap() {
     if (!map) return;
-    var pts = [[IGREJA.lat, IGREJA.lng], [FESTA.lat, FESTA.lng]].concat(visibleHotels().filter(function (h) { return h.lat < -19.9; }).map(function (h) { return [h.lat, h.lng]; }));
+    var pts = [[IGREJA.lat, IGREJA.lng], [FESTA.lat, FESTA.lng]].concat(visibleHotels().map(function (h) { return [h.lat, h.lng]; }));
     map.fitBounds(pts, { padding: [40, 40], maxZoom: 14 });
   }
   function pinIcon(cls, label, size) {
