@@ -189,9 +189,9 @@
     if (typeof L === 'undefined') { $('map-fallback').textContent = 'Não foi possível carregar o mapa. Use os links “Ver local” e “Rota”.'; return; }
     $('map-fallback').hidden = true;
     map = L.map('mapa', { scrollWheelZoom: false, zoomControl: true });
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-      maxZoom: 19, subdomains: 'abcd',
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
     var church = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M10 4h4M5 21V11l7-5 7 5v10M3 21h18"/></svg>';
     var glass = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h4l-.5 5a1.5 1.5 0 0 1-3 0zM10 9.5V20M7.5 20h5M14 3h4l-.5 5a1.5 1.5 0 0 1-3 0zM16 9.5V20M13.5 20h5"/></svg>';
