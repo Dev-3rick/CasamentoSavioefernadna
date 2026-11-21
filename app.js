@@ -89,8 +89,126 @@
     burger.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
     $('burger-icon').setAttribute('d', open ? 'M6 6l12 12M18 6L6 18' : 'M4 7h16M4 12h16M4 17h16');
   }
-  burger.addEventListener('click', function () { setMenu(!navMobile.classList.contains('open')); });
-  navMobile.addEventListener('click', function (e) { if (e.target.tagName === 'A') setMenu(false); });
+  burger.addEventListener('click', function () { setMenu(!navMobile.classList.contains('open')); updateHeader(); });
+  navMobile.addEventListener('click', function (e) { if (e.target.tagName === 'A') { setMenu(false); updateHeader(); } });
+
+  // Cápsula de vidro: transparente sobre a foto, clara depois que rola
+  var header = $('site-header');
+  function updateHeader() {
+    var solid = window.scrollY > 60 || navMobile.classList.contains('open');
+    header.classList.toggle('solid', solid);
+  }
+  window.addEventListener('scroll', updateHeader, { passive: true });
+  updateHeader();
+
+  // ---------- Faixa (letreiro) ----------
+  var MARQUEE = ['Fernanda & Sávio', '21 de agosto de 2027', 'Santuário de São João Batista · 9h30', 'Recepção no Rancho Coyote', 'Barão de Cocais', 'Traje esporte fino', 'Confirme sua presença'];
+  var track = $('marquee-track');
+  [0, 1].forEach(function (copy) {
+    MARQUEE.forEach(function (t) {
+      var s = el('span', null, t); if (copy) s.setAttribute('aria-hidden', 'true');
+      var i = el('i'); i.setAttribute('aria-hidden', 'true');
+      track.appendChild(s); track.appendChild(i);
+    });
+  });
+
+  // ---------- Hospedagem + mapa ----------
+  var IGREJA = { name: 'Santuário de São João Batista', lat: -19.9454687, lng: -43.487551, pid: 'ChIJEYKZ59k3pAARlE9CPQ885sg' };
+  var FESTA = { name: 'Rancho Coyote', lat: -19.9131134, lng: -43.4552026, pid: 'ChIJwZF2e5pJpAARABYKZubaoVM' };
+  var HOTEIS = [
+    { name: 'Impar Suítes', city: 'Barão de Cocais', addr: 'Av. Hortelina de Lima e Souza, 302 — Cidade Nova', lat: -19.9384517, lng: -43.472908, pid: 'ChIJicb_Ns9JpAARu4HScyOV2Qk' },
+    { name: 'Estância Peti Pousada', city: 'Barão de Cocais', addr: 'Zona rural de Barão de Cocais', lat: -19.9071691, lng: -43.4401477, pid: 'ChIJ8azDU9FLpAARZxpwjm9-7tI' },
+    { name: 'Pousada & Restaurante Vila Cocais', city: 'Cocais', addr: 'R. Aristides Augusto da Fonseca, 270 — Cocais', lat: -19.8632235, lng: -43.4544435, pid: 'ChIJ-20YgN5KpAARSxdacSiRggk' },
+    { name: 'Hotel Ouro Mel', city: 'Santa Bárbara', addr: 'R. Antônio Pereira Rocha, 45 — Centro', lat: -19.9586, lng: -43.41265, pid: 'ChIJfYKcVgBJpAARJvrhE75GG3M' },
+    { name: 'Hotel Quadrado', city: 'Santa Bárbara', addr: 'Pç. Cleves de Faria, 136 — Centro', lat: -19.9601475, lng: -43.4171324, pid: 'ChIJL9kf6NlIpAAR0Jarw7xM-7k' },
+    { name: 'AR Pousada', city: 'Santa Bárbara', addr: 'Rua Abel Gonçalves, 999 — Barra Feliz', lat: -19.9611119, lng: -43.4578499, pid: 'ChIJK3rOxWRJpAARY--3oyiPTYE' },
+    { name: 'Pousada Circuito do Ouro', city: 'Santa Bárbara', addr: 'Rua João Mota, 107 — Centro', lat: -19.9594943, lng: -43.4144581, pid: 'ChIJw3Cz481JpAARrKVNjqp9aIY' },
+    { name: 'Pousada Maria Francisca', city: 'Santa Bárbara', addr: 'Rodovia do Caraça, 1495 — Brumal', lat: -19.9922552, lng: -43.4552718, pid: 'ChIJM-p7sNpHpAAR4ZLq8-ODfqE' }
+  ];
+  function km(a, b) {
+    var R = 6371, toR = Math.PI / 180, dLat = (b.lat - a.lat) * toR, dLng = (b.lng - a.lng) * toR;
+    var h = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(a.lat * toR) * Math.cos(b.lat * toR) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    return R * 2 * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h));
+  }
+  function fmtKm(v) { return v.toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' km'; }
+  function placeUrl(p) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(p.name + ' ' + (p.city || 'Barão de Cocais')) + '&query_place_id=' + p.pid; }
+  function routeUrl(from, to) { return 'https://www.google.com/maps/dir/?api=1&origin=' + from.lat + ',' + from.lng + '&destination=' + encodeURIComponent(to.name) + '&destination_place_id=' + to.pid; }
+  HOTEIS.forEach(function (h, i) { h.n = i + 1; h.dIgreja = km(h, IGREJA); h.dFesta = km(h, FESTA); });
+
+  var stayFilter = 'Todas', activeHotel = null, map = null, hotelMarkers = {};
+  function renderStayFilter() {
+    var f = $('stay-filter'); f.innerHTML = '';
+    ['Todas', 'Barão de Cocais', 'Cocais', 'Santa Bárbara'].forEach(function (c) {
+      var b = el('button', null, c); b.type = 'button';
+      b.setAttribute('aria-pressed', c === stayFilter ? 'true' : 'false');
+      b.addEventListener('click', function () { stayFilter = c; renderStayFilter(); renderStayList(); fitMap(); });
+      f.appendChild(b);
+    });
+  }
+  function visibleHotels() { return HOTEIS.filter(function (h) { return stayFilter === 'Todas' || h.city === stayFilter; }); }
+  function renderStayList() {
+    var list = $('stay-list'); list.innerHTML = '';
+    visibleHotels().forEach(function (h) {
+      var card = el('div', 'hotel' + (activeHotel === h.n ? ' active' : ''));
+      card.setAttribute('role', 'button'); card.tabIndex = 0;
+      card.setAttribute('aria-label', h.name + ', ' + h.city + '. Mostrar no mapa');
+      card.appendChild(el('span', 'hotel-num', String(h.n)));
+      var t = el('span', 'hotel-txt');
+      t.appendChild(el('span', 'hotel-city', h.city));
+      t.appendChild(el('span', 'hotel-name', h.name));
+      t.appendChild(el('span', 'hotel-dist', fmtKm(h.dIgreja) + ' da igreja · ' + fmtKm(h.dFesta) + ' da festa'));
+      var links = el('span', 'hotel-links');
+      var a1 = el('a', null, 'Ver local'); a1.href = placeUrl(h); a1.target = '_blank'; a1.rel = 'noopener';
+      var a2 = el('a', null, 'Rota até a festa'); a2.href = routeUrl(h, FESTA); a2.target = '_blank'; a2.rel = 'noopener';
+      [a1, a2].forEach(function (a) { a.addEventListener('click', function (e) { e.stopPropagation(); }); links.appendChild(a); });
+      t.appendChild(links);
+      card.appendChild(t);
+      function pick() { focusHotel(h); }
+      card.addEventListener('click', pick);
+      card.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } });
+      list.appendChild(card);
+    });
+  }
+  function focusHotel(h) {
+    activeHotel = h.n; renderStayList();
+    Object.keys(hotelMarkers).forEach(function (k) {
+      var m = hotelMarkers[k]; var elx = m.getElement && m.getElement();
+      if (elx) elx.querySelector('.pin').classList.toggle('active', Number(k) === h.n);
+    });
+    if (map) { map.flyTo([h.lat, h.lng], 14, { duration: .8 }); hotelMarkers[h.n].openPopup(); }
+  }
+  function fitMap() {
+    if (!map) return;
+    var pts = [[IGREJA.lat, IGREJA.lng], [FESTA.lat, FESTA.lng]].concat(visibleHotels().map(function (h) { return [h.lat, h.lng]; }));
+    map.fitBounds(pts, { padding: [40, 40], maxZoom: 14 });
+  }
+  function pinIcon(cls, label, size) {
+    return L.divIcon({ className: '', html: '<div class="pin ' + cls + '">' + label + '</div>', iconSize: [size, size], iconAnchor: [size / 2, size / 2], popupAnchor: [0, -size / 2] });
+  }
+  function initMap() {
+    if (typeof L === 'undefined') { $('map-fallback').textContent = 'Não foi possível carregar o mapa. Use os links “Ver local” e “Rota”.'; return; }
+    $('map-fallback').hidden = true;
+    map = L.map('mapa', { scrollWheelZoom: false, zoomControl: true });
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      maxZoom: 19, subdomains: 'abcd',
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    }).addTo(map);
+    var church = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M10 4h4M5 21V11l7-5 7 5v10M3 21h18"/></svg>';
+    var glass = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h4l-.5 5a1.5 1.5 0 0 1-3 0zM10 9.5V20M7.5 20h5M14 3h4l-.5 5a1.5 1.5 0 0 1-3 0zM16 9.5V20M13.5 20h5"/></svg>';
+    L.marker([IGREJA.lat, IGREJA.lng], { icon: pinIcon('pin-church', church, 38), zIndexOffset: 1000, title: 'Igreja' }).addTo(map)
+      .bindPopup('<strong>' + IGREJA.name + '</strong><br>Cerimônia · 9h30<br><a href="' + placeUrl(IGREJA) + '" target="_blank" rel="noopener">Ver no Google Maps</a>');
+    L.marker([FESTA.lat, FESTA.lng], { icon: pinIcon('pin-party', glass, 38), zIndexOffset: 1000, title: 'Festa' }).addTo(map)
+      .bindPopup('<strong>' + FESTA.name + '</strong><br>Recepção<br><a href="' + placeUrl(FESTA) + '" target="_blank" rel="noopener">Ver no Google Maps</a>');
+    HOTEIS.forEach(function (h) {
+      var m = L.marker([h.lat, h.lng], { icon: pinIcon('pin-hotel', String(h.n), 28), title: h.name }).addTo(map);
+      m.bindPopup('<strong>' + h.name + '</strong><br>' + h.city + '<br>' + fmtKm(h.dIgreja) + ' da igreja · ' + fmtKm(h.dFesta) + ' da festa<br><a href="' + routeUrl(h, FESTA) + '" target="_blank" rel="noopener">Rota até a festa</a>');
+      m.on('click', function () { activeHotel = h.n; renderStayList(); });
+      hotelMarkers[h.n] = m;
+    });
+    fitMap();
+  }
+  renderStayFilter(); renderStayList();
+  if (document.readyState === 'complete') initMap(); else window.addEventListener('load', initMap);
 
   // ---------- Contagem regressiva ----------
   function tick() {
