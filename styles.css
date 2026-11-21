@@ -283,3 +283,117 @@ fieldset.field legend{margin-bottom:8px}
   .place{padding:30px 22px}
 }
 @media (prefers-reduced-motion:reduce){.marquee-track{animation:none}html{scroll-behavior:auto}}
+
+/* =========================================================
+   TEMA TERROSO — o site inteiro no tom da tela inicial
+   ========================================================= */
+:root{--e0:#1E160E;--e1:#241A11;--e2:#2C2117;--card:#33271B;--card2:#3A2D20;--eline:rgba(217,190,138,.22);--eline2:rgba(217,190,138,.38);--txt:#F2E8D8;--txt2:#D9CBB3;--txt3:#B8A688;--accent:#D9BE8A;--accent2:#C9A66B}
+body{background:var(--e0);color:var(--txt)}
+.section{color:var(--txt)}
+#historia,#dresscode,#hospedagem,#presentes{background:var(--e1)}
+#cerimonia,#indicacoes,#presenca{background:var(--e2)}
+.title .script{color:var(--accent)}
+.title h2{color:var(--txt)}
+.lead,.story-text p.body,.dress .aviso{color:var(--txt2)}
+.eyebrow,.ind-city .eyebrow,.hotel-city{color:var(--accent2)}
+a{color:var(--accent)}a:hover{color:#F0D9A8}
+/* botões */
+.btn-gold{background:var(--accent);color:var(--e0)}
+.btn-gold:hover{background:#E8CD98;color:var(--e0)}
+.btn-line{border-color:var(--accent);color:var(--accent)}
+.btn-line:hover{background:var(--accent);color:var(--e0)}
+/* história */
+.story-photo{background:var(--card);border-color:var(--eline);box-shadow:0 24px 50px rgba(0,0,0,.35)}
+.story-text span[aria-hidden]{background:var(--accent) !important}
+.timeline div{border-top-color:var(--eline2)}
+.timeline .y{color:var(--accent)}
+.timeline .l{color:var(--txt3)}
+/* cerimônia */
+.place{background:var(--card);border-color:var(--eline)}
+.place h3{color:var(--txt)}
+.place p.info{color:var(--txt2)}
+.place svg{stroke:var(--accent)}
+.route{background:var(--card2);border-color:var(--eline)}
+.route .eyebrow{color:var(--txt3) !important}
+.route-stop .ic{background:var(--e1);border-color:var(--eline2)}
+.route-stop .ic svg{stroke:var(--accent)}
+.route-stop .n{color:var(--txt)}
+.route-stop .s,.route .note{color:var(--txt3)}
+.route-line{border-color:var(--accent2)}
+/* dress code */
+.dress .traje{color:var(--accent)}
+.dress .aviso{border-color:var(--eline2)}
+/* indicações */
+.ind-card{background:var(--card);border-color:var(--eline)}
+.ind-card h3{color:var(--txt)}
+.ig-row{border-color:var(--eline);color:var(--txt)}
+.ig-row:hover{background:var(--card2);color:var(--txt)}
+.ig-ic{background:var(--e1);color:var(--accent)}
+.ig-handle{color:var(--txt3)}
+.ig-go{color:var(--accent2)}
+/* hospedagem */
+.hotel{background:var(--card);border-color:var(--eline)}
+.hotel:hover,.hotel.active{border-color:var(--accent);box-shadow:0 10px 24px rgba(0,0,0,.3)}
+.hotel-num{background:var(--e1);border-color:var(--accent);color:var(--accent)}
+.hotel-name{color:var(--txt)}
+.hotel-dist{color:var(--txt3)}
+.hotel-links a{color:var(--accent)}
+.map-box{border-color:var(--eline);background:var(--card)}
+.stay-note{color:var(--txt3)}
+.map-legend{background:rgba(36,26,17,.82);border-color:var(--eline);color:var(--txt2)}
+/* presença */
+.rsvp{background:var(--card);border-color:var(--eline)}
+.rsvp .title .script{color:var(--accent)}
+.rsvp .title .hint{color:var(--txt3)}
+.field label,.field legend{color:var(--txt3)}
+.field input,.field select,.field textarea{background:var(--e1);border-color:var(--eline2);color:var(--txt)}
+.radios label{border-color:var(--eline2);color:var(--txt)}
+.radios input{accent-color:var(--accent)}
+.done .t{color:var(--txt)}.done .s{color:var(--txt3)}
+.done svg{stroke:var(--accent)}
+/* presentes */
+.filters button{color:var(--txt2);border-color:var(--eline2)}
+.filters button[aria-pressed="true"]{background:var(--accent);color:var(--e0);border-color:var(--accent)}
+.gift{background:var(--card);border-color:var(--eline)}
+.gift:hover{box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.gift-img{background:var(--card2)}
+.gift-img svg{stroke:var(--accent)}
+.gift-cat{background:var(--e1);color:var(--accent2)}
+.gift-body h3{color:var(--txt)}
+.gift-body .d{color:var(--txt3)}
+.gift-body .p{color:var(--accent)}
+.pix-direct{color:var(--txt3)}.pix-direct strong{color:var(--txt)}
+/* rodapé */
+.footer{background:var(--e0);border-top-color:var(--eline)}
+.footer img{filter:brightness(1.7) saturate(.7)}
+.footer .n{color:var(--txt2)}.footer .d{color:var(--accent)}
+/* modal de pagamento */
+.dialog{background:var(--card);border-color:var(--eline2)}
+.dialog-head,.dialog-item{border-color:var(--eline)}
+.dialog-head p{color:var(--accent2)}
+.icon-btn{color:var(--txt2)}
+.dialog-item .ic{background:var(--card2)}
+.dialog-item .ic svg{stroke:var(--accent)}
+.dialog-item .n,.total span:last-child{color:var(--txt)}
+.dialog-item .p{color:var(--accent)}
+.total{border-top-color:var(--eline)}
+.total span:first-child,.step-pix p{color:var(--txt2)}
+.copy-row input{background:var(--e1);border-color:var(--eline2);color:var(--txt2)}
+.copy-row button{background:transparent;border-color:var(--accent);color:var(--accent)}
+.qr-box{border-color:var(--accent)}
+.step-done img{filter:brightness(1.7) saturate(.7)}
+.step-done .t{color:var(--accent)}
+.step-done .s{color:var(--txt2)}
+/* menu ao rolar: vidro escuro em vez de claro */
+.site-header.solid .nav{background:rgba(30,22,14,.62);border-color:rgba(217,190,138,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 10px 30px rgba(0,0,0,.35)}
+.site-header.solid .nav-logo img{filter:brightness(1.7) saturate(.7)}
+.site-header.solid .nav-links a{color:#EADBC2}
+.site-header.solid .nav-links a:hover{color:#fff}
+.site-header.solid .nav-cta{background:var(--accent);border-color:var(--accent);color:var(--e0)}
+.site-header.solid .nav-cta:hover{background:#E8CD98}
+.site-header.solid .nav-burger{color:#F5ECDD}
+.nav-mobile{background:rgba(30,22,14,.86);border-color:rgba(217,190,138,.28);box-shadow:0 12px 30px rgba(0,0,0,.4)}
+.nav-mobile a{color:#EADBC2;border-bottom-color:rgba(217,190,138,.18)}
+/* mapa em tom terroso */
+#mapa .leaflet-tile-pane{filter:sepia(.55) saturate(.65) brightness(.9) contrast(.95)}
+.leaflet-container a.leaflet-popup-close-button{color:var(--muted)}
