@@ -334,3 +334,7 @@ fieldset.field legend{margin-bottom:8px}
 .gift{cursor:pointer}
 .amt-edit{flex:0 0 auto;margin-right:6px;min-height:34px;padding:0 12px;display:flex;align-items:center;gap:6px;border:1px solid #CFB59B;background:var(--paper);color:var(--gold-dark);font:inherit;font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:background .2s}
 .amt-edit:hover{background:var(--beige)}
+.gift.given{opacity:.55;filter:grayscale(.4);cursor:default}
+.gift.given:hover{transform:none;box-shadow:none}
+.gift.given .gift-cat{background:var(--gold-dark);color:var(--ivory)}
+.gift.given .btn-gold{background:transparent;color:var(--gold-dark);border:1px solid #CFB59B;cursor:default}

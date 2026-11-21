@@ -14,16 +14,41 @@
     cafe: 'M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5zM16 10h1.5a2.5 2.5 0 0 1 0 5H16M8 3.5v2.5M12 3.5v2.5',
     toalhas: 'M6 3h12v14H6zM6 7h12M8 17v4M16 17v4M8 21h8',
     liquidificador: 'M8 3h8l-1 11H9zM7 14h10v6H7zM10 3V1.5h4V3M11 17h2',
+    fogao: 'M4 3h16v18H4zM4 9h16M8 6h.01M12 6h.01M16 6h.01M7 12h10v6H7z',
+    micro: 'M2 5h20v14H2zM5 8h10v8H5zM18 9v.01M18 12v.01M17 16h2',
+    lavar: 'M5 2h14v20H5zM5 6h14M8 4h.01M11 4h.01M12 9a5 5 0 1 1 0 10a5 5 0 1 1 0-10',
+    airfryer: 'M6 4h12l2 16H4zM8 9h8M10 14h4',
+    batedeira: 'M3 21h14M6 21v-3h8v3M9 18l1-7h1l1 7M4 11h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4z',
+    prato: 'M12 3a9 9 0 1 1 0 18a9 9 0 1 1 0-18M12 7a5 5 0 1 1 0 10a5 5 0 1 1 0-10',
+    talher: 'M7 2v7a2 2 0 0 0 4 0V2M9 11v11M17 2c-2 0-3 3-3 6s1 4 3 4v10',
+    taca: 'M7 2h10l-1 7a4 4 0 0 1-8 0zM12 13v8M8 21h8',
+    travesseiro: 'M4 7c3-2 13-2 16 0c1 3 1 7 0 10c-3 2-13 2-16 0c-1-3-1-7 0-10z',
+    aspirador: 'M14 3l-4 12M6 15h8a3 3 0 0 1 3 3v2H3v-2a3 3 0 0 1 3-3zM7 21h.01M13 21h.01',
+    ferro: 'M3 18h18c0-5-3-9-9-9H8M3 18l2-6h10M9 9V6h6',
     aviao: 'M22 2L11 13M22 2l-7 20-4-9-9-4z',
     jantar: 'M8 3h4l-.5 5a1.5 1.5 0 0 1-3 0zM10 9.5V20M7.5 20h5M14 3h4l-.5 5a1.5 1.5 0 0 1-3 0zM16 9.5V20M13.5 20h5'
   };
   var GIFTS = [
     { id: 1, cat: 'Casa nova', name: 'Geladeira', desc: 'Para a cozinha da casa nova começar bem abastecida.', price: 3200, icon: ICONS.geladeira },
-    { id: 2, cat: 'Casa nova', name: 'Jogo de cama casal', desc: 'Lençóis macios para as primeiras noites no lar.', price: 350, icon: ICONS.cama },
-    { id: 3, cat: 'Casa nova', name: 'Jogo de panelas', desc: 'Para os jantares a dois (e os almoços de domingo).', price: 600, icon: ICONS.panelas },
-    { id: 4, cat: 'Casa nova', name: 'Cafeteira', desc: 'O café da manhã de recém-casados agradece.', price: 280, icon: ICONS.cafe },
-    { id: 5, cat: 'Casa nova', name: 'Jogo de toalhas', desc: 'Enxoval de banho completo para a casa nova.', price: 180, icon: ICONS.toalhas },
-    { id: 6, cat: 'Casa nova', name: 'Liquidificador', desc: 'Sucos, vitaminas e receitas de família.', price: 220, icon: ICONS.liquidificador }
+    { id: 2, cat: 'Casa nova', name: 'Fogão', desc: 'Para os primeiros almoços e jantares da casa nova.', price: 1500, icon: ICONS.fogao },
+    { id: 3, cat: 'Casa nova', name: 'Máquina de lavar', desc: 'Roupa limpa sem sair de casa.', price: 2500, icon: ICONS.lavar },
+    { id: 4, cat: 'Casa nova', name: 'Micro-ondas', desc: 'Para esquentar o café que esfriou na correria.', price: 650, icon: ICONS.micro },
+    { id: 5, cat: 'Casa nova', name: 'Airfryer', desc: 'Batata crocante sem óleo — os noivos aprovam.', price: 450, icon: ICONS.airfryer },
+    { id: 6, cat: 'Casa nova', name: 'Jogo de panelas', desc: 'Para os jantares a dois (e os almoços de domingo).', price: 600, icon: ICONS.panelas },
+    { id: 7, cat: 'Casa nova', name: 'Panela de pressão', desc: 'Feijão de Minas, do jeito certo.', price: 250, icon: ICONS.panelas },
+    { id: 8, cat: 'Casa nova', name: 'Liquidificador', desc: 'Sucos, vitaminas e receitas de família.', price: 220, icon: ICONS.liquidificador },
+    { id: 9, cat: 'Casa nova', name: 'Batedeira', desc: 'Bolos de domingo e receitas de família.', price: 300, icon: ICONS.batedeira },
+    { id: 10, cat: 'Casa nova', name: 'Cafeteira', desc: 'O café da manhã de recém-casados agradece.', price: 280, icon: ICONS.cafe },
+    { id: 11, cat: 'Casa nova', name: 'Aparelho de jantar', desc: 'Pratos para receber a família em casa.', price: 450, icon: ICONS.prato },
+    { id: 12, cat: 'Casa nova', name: 'Faqueiro', desc: 'Talheres para o dia a dia e para as visitas.', price: 250, icon: ICONS.talher },
+    { id: 13, cat: 'Casa nova', name: 'Jogo de copos e taças', desc: 'Para brindar cada conquista a dois.', price: 180, icon: ICONS.taca },
+    { id: 14, cat: 'Casa nova', name: 'Jogo de cama casal', desc: 'Lençóis macios para as primeiras noites no lar.', price: 350, icon: ICONS.cama },
+    { id: 15, cat: 'Casa nova', name: 'Edredom', desc: 'Para o inverno mineiro.', price: 300, icon: ICONS.cama },
+    { id: 16, cat: 'Casa nova', name: 'Par de travesseiros', desc: 'Noites bem dormidas na casa nova.', price: 200, icon: ICONS.travesseiro },
+    { id: 17, cat: 'Casa nova', name: 'Jogo de toalhas', desc: 'Enxoval de banho completo para a casa nova.', price: 180, icon: ICONS.toalhas },
+    { id: 18, cat: 'Casa nova', name: 'Kit panos de prato', desc: 'Porque a cozinha nunca tem pano de prato demais.', price: 80, icon: ICONS.toalhas },
+    { id: 19, cat: 'Casa nova', name: 'Aspirador de pó', desc: 'Casa limpa com menos esforço.', price: 400, icon: ICONS.aspirador },
+    { id: 20, cat: 'Casa nova', name: 'Ferro de passar', desc: 'Roupa alinhada para os compromissos.', price: 150, icon: ICONS.ferro }
   ];
   function ig(name, handle) { return { name: name, handle: '@' + handle, url: 'https://www.instagram.com/' + handle + '/' }; }
   var INDICACOES = [
@@ -255,18 +280,19 @@
   function renderGifts() {
     grid.innerHTML = '';
     GIFTS.forEach(function (g) {
-      var art = el('article', 'gift');
-      art.addEventListener('click', function () { openGift(g); });
+      var art = el('article', 'gift' + (g.given ? ' given' : ''));
+      if (!g.given) art.addEventListener('click', function () { openGift(g); });
       var img = el('div', 'gift-img');
       img.appendChild(icon(g.icon, 64, '#9A7352', 1));
-      img.appendChild(el('span', 'gift-cat', g.cat));
+      img.appendChild(el('span', 'gift-cat', g.given ? '✓ Já presenteado' : g.cat));
       art.appendChild(img);
       var body = el('div', 'gift-body');
       body.appendChild(el('h3', null, g.name));
       body.appendChild(el('p', 'd', g.desc));
       body.appendChild(el('p', 'p', brl(g.price)));
-      var btn = el('button', 'btn-gold', 'Presentear'); btn.type = 'button';
-      btn.addEventListener('click', function (e) { e.stopPropagation(); openGift(g); });
+      var btn = el('button', 'btn-gold', g.given ? 'Já presenteado' : 'Presentear'); btn.type = 'button';
+      if (g.given) btn.disabled = true;
+      else btn.addEventListener('click', function (e) { e.stopPropagation(); openGift(g); });
       body.appendChild(btn);
       art.appendChild(body);
       grid.appendChild(art);
