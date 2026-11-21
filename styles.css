@@ -85,10 +85,41 @@ section{scroll-margin-top:80px}
 .story-text{flex:1 1 420px;min-width:0;display:flex;flex-direction:column;gap:20px}
 .story-text .title{text-align:left}
 .story-text p.body{margin:0;font-family:'Cormorant Garamond',serif;font-size:21px;line-height:1.65;color:var(--ink2)}
-.timeline{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:8px}
-.timeline div{border-top:1px solid #CFB59B;padding-top:12px}
-.timeline .y{margin:0;font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold-dark)}
-.timeline .l{margin:4px 0 0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted2)}
+.tl{position:relative;max-width:900px;margin:96px auto 0}
+.tl-line,.tl-fill{position:absolute;left:50%;top:0;bottom:0}
+.tl-line{width:1px;margin-left:-.5px;background:var(--line)}
+.tl-fill{width:2px;margin-left:-1px;background:var(--gold);transform-origin:top}
+.tl-item{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 104px minmax(0,1fr);align-items:center;min-height:230px}
+.tl-c{display:flex;flex-direction:column;gap:8px;align-items:flex-start;text-align:left}
+.tl-c.tl-r{align-items:flex-end;text-align:right}
+.tl-c h3{margin:0;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:32px;line-height:1.1;color:var(--ink)}
+.tl-y{margin:0;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--sage)}
+.tl-d{margin:0;max-width:340px;font-family:'Cormorant Garamond',serif;font-size:19px;line-height:1.55;color:var(--ink2)}
+.tl-node{justify-self:center;position:relative;z-index:1;width:64px;height:64px;border-radius:50%;border:1px solid #CFB59B;background:var(--ivory);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:var(--gold)}
+@media (max-width:720px){.tl{margin-top:64px}.tl-item{grid-template-columns:56px minmax(0,1fr);min-height:170px;column-gap:12px}.tl-node{grid-column:1;grid-row:1;width:48px;height:48px;font-size:19px}.tl-c,.tl-c.tl-r{grid-column:2;grid-row:1;text-align:left;align-items:flex-start}.tl-c h3{font-size:26px}.tl-e{display:none}.tl-line,.tl-fill{left:28px}}
+
+/* ---------- ANIMAÇÕES DE ROLAGEM ---------- */
+@keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+@keyframes fromL{from{opacity:0;transform:translateX(-56px)}to{opacity:1;transform:none}}
+@keyframes fromR{from{opacity:0;transform:translateX(56px)}to{opacity:1;transform:none}}
+@keyframes fillY{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes nodeOn{to{background:var(--gold-dark);color:var(--ivory);border-color:var(--gold-dark)}}
+@keyframes dimIn{from{opacity:.2;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.story-photo{animation:floaty 7s ease-in-out infinite}
+@supports (animation-timeline: view()){
+  .section h2,.section .script,.section form,.story-text p.body{animation:rise linear both;animation-timeline:view();animation-range:entry 5% cover 30%}
+  .places>:nth-child(odd),.ind-grid>:nth-child(odd){animation:fromL linear both;animation-timeline:view();animation-range:entry 0% cover 32%}
+  .places>:nth-child(even),.ind-grid>:nth-child(even),.lua-card{animation:fromR linear both;animation-timeline:view();animation-range:entry 0% cover 32%}
+  .gift{animation:rise linear both;animation-timeline:view();animation-range:entry 0% cover 26%}
+  .gift:nth-child(3n+2){animation-range:entry 6% cover 32%}
+  .gift:nth-child(3n){animation-range:entry 12% cover 38%}
+  .tl{view-timeline-name:--tl}
+  .tl-fill{animation:fillY linear both;animation-timeline:--tl;animation-range:cover 30% cover 78%}
+  .tl-node{animation:nodeOn linear both;animation-timeline:view();animation-range:cover 46% cover 54%}
+  .tl-c{animation:dimIn linear both;animation-timeline:view();animation-range:entry 10% cover 45%}
+}
+@media (prefers-reduced-motion: reduce){.story-photo,.section *,.tl-fill,.tl-node,.tl-c{animation:none !important}}
 
 #cerimonia{background:var(--beige)}
 .stack{display:flex;flex-direction:column;gap:48px}
@@ -196,8 +227,21 @@ fieldset.field legend{margin-bottom:8px}
 .gift-body .d{margin:0;font-size:14px;line-height:1.5;color:var(--muted);flex:1}
 .gift-body .p{margin:10px 0 0;font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:var(--gold-dark)}
 .gift-body .btn-gold{margin-top:10px;min-height:46px;padding:0 12px}
-.pix-direct{margin:0;text-align:center;font-size:14px;color:var(--muted);word-break:break-all}
-.pix-direct strong{font-weight:500;color:var(--ink)}
+.lua-card{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px 32px;padding:32px 36px;background:var(--ivory);border:1px solid var(--line)}
+.lua-l{display:flex;align-items:center;gap:20px;flex:1 1 420px;min-width:0}
+.lua-ic{flex:0 0 auto;width:64px;height:64px;border-radius:50%;background:var(--beige);display:flex;align-items:center;justify-content:center}
+.lua-l>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.lua-t{margin:0;font-size:40px;line-height:1;color:var(--gold)}
+.lua-d{margin:0;font-family:'Cormorant Garamond',serif;font-size:19px;line-height:1.5;color:var(--ink2)}
+.lua-card .btn-gold{min-height:50px;padding:0 30px}
+.amt-field{width:100%;text-align:left}
+.amt-row{display:flex;align-items:center;border:1px solid #D8CBB2;background:var(--ivory)}
+.amt-row span{padding-left:14px;font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--muted)}
+.amt-row input{flex:1;min-width:0;min-height:48px;border:0;padding:0 12px;background:transparent;font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--ink)}
+.amt-row:focus-within{border-color:var(--gold)}
+.amt-row input:focus{outline:none}
+.amt-hint{font-size:12px;color:var(--muted)}
+#qr-msg{padding:0 20px;font-size:13px;color:var(--muted)}
 
 .footer{padding:64px 24px;background:var(--beige2);text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;border-top:1px solid var(--line)}
 .footer img{height:72px;width:auto}

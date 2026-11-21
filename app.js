@@ -23,9 +23,7 @@
     { id: 3, cat: 'Casa nova', name: 'Jogo de panelas', desc: 'Para os jantares a dois (e os almoços de domingo).', price: 600, icon: ICONS.panelas },
     { id: 4, cat: 'Casa nova', name: 'Cafeteira', desc: 'O café da manhã de recém-casados agradece.', price: 280, icon: ICONS.cafe },
     { id: 5, cat: 'Casa nova', name: 'Jogo de toalhas', desc: 'Enxoval de banho completo para a casa nova.', price: 180, icon: ICONS.toalhas },
-    { id: 6, cat: 'Casa nova', name: 'Liquidificador', desc: 'Sucos, vitaminas e receitas de família.', price: 220, icon: ICONS.liquidificador },
-    { id: 7, cat: 'Lua de mel', name: 'Cota das passagens', desc: 'Uma ajudinha para levar os noivos até o destino.', price: 500, icon: ICONS.aviao },
-    { id: 8, cat: 'Lua de mel', name: 'Jantar romântico', desc: 'Uma noite especial durante a lua de mel.', price: 250, icon: ICONS.jantar }
+    { id: 6, cat: 'Casa nova', name: 'Liquidificador', desc: 'Sucos, vitaminas e receitas de família.', price: 220, icon: ICONS.liquidificador }
   ];
   function ig(name, handle) { return { name: name, handle: '@' + handle, url: 'https://www.instagram.com/' + handle + '/' }; }
   var INDICACOES = [
@@ -251,21 +249,10 @@
   });
 
   // ---------- Lista de presentes ----------
-  $('pix-key').textContent = PIX_KEY;
-  var filter = 'Todos';
-  var filtersEl = $('filters'), grid = $('gift-grid');
-  function renderFilters() {
-    filtersEl.innerHTML = '';
-    ['Todos', 'Casa nova', 'Lua de mel'].forEach(function (f) {
-      var b = el('button', null, f); b.type = 'button';
-      b.setAttribute('aria-pressed', f === filter ? 'true' : 'false');
-      b.addEventListener('click', function () { filter = f; renderFilters(); renderGifts(); });
-      filtersEl.appendChild(b);
-    });
-  }
+  var grid = $('gift-grid');
   function renderGifts() {
     grid.innerHTML = '';
-    GIFTS.filter(function (g) { return filter === 'Todos' || g.cat === filter; }).forEach(function (g) {
+    GIFTS.forEach(function (g) {
       var art = el('article', 'gift');
       var img = el('div', 'gift-img');
       img.appendChild(icon(g.icon, 64, '#9A7352', 1));
@@ -282,7 +269,9 @@
       grid.appendChild(art);
     });
   }
-  renderFilters(); renderGifts();
+  renderGifts();
+  var LUA = { id: 99, cat: 'Lua de mel', name: 'Lua de mel', desc: 'Contribuição livre para a viagem dos noivos.', price: 200, icon: ICONS.aviao };
+  $('lua-btn').addEventListener('click', function () { openGift(LUA); });
 
   // ---------- Checkout ----------
   var modal = $('modal'), current = null, lastFocus = null;
@@ -313,12 +302,26 @@
   modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
 
+  function parseAmt(s) { var v = parseFloat(String(s).replace(/\s/g, '').replace(/\./g, function (m, i, str) { return str.indexOf(',') >= 0 ? '' : m; }).replace(',', '.')); return isNaN(v) ? 0 : Math.round(v * 100) / 100; }
+  function updatePix() {
+    var amt = parseAmt($('pix-valor').value), ok = amt > 0 && amt < 1000000;
+    $('sel-price').textContent = ok ? brl(amt) : 'Valor livre';
+    $('copy-btn').textContent = 'Copiar';
+    if (ok) {
+      var code = pixCode(amt);
+      $('pix-code').value = code;
+      $('qr-img').src = qrSrc(code); $('qr-img').hidden = false; $('qr-msg').hidden = true;
+    } else {
+      $('pix-code').value = ''; $('qr-img').hidden = true; $('qr-msg').hidden = false;
+    }
+  }
+  $('pix-valor').addEventListener('input', updatePix);
   $('step-form').addEventListener('submit', function (e) {
     e.preventDefault();
     // TODO: salvar nome + mensagem + presente (banco de dados / e-mail).
-    var code = pixCode(current.price);
-    $('pix-code').value = code;
-    $('qr-img').src = qrSrc(code);
+    $('pix-valor').value = String(current.price);
+    $('amt-hint').textContent = current.id === 99 ? 'Valor sugerido — você pode colocar quanto quiser.' : 'Valor do presente: ' + brl(current.price) + ' — você pode ajustar, se preferir.';
+    updatePix();
     showStep('pix');
   });
   $('copy-btn').addEventListener('click', function () {

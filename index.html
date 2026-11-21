@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
-<link rel="stylesheet" href="styles.css?v=20261120f">
+<link rel="stylesheet" href="styles.css?v=20261120g">
 </head>
 <body>
 
@@ -82,11 +82,25 @@
         <div class="title"><p class="script">Nossa</p><h2>História</h2></div>
         <span aria-hidden="true" style="width:56px;height:1px;background:var(--gold)"></span>
         <p class="body">[Texto do casal — como se conheceram, o primeiro encontro, o pedido. Dois ou três parágrafos curtos funcionam melhor.]</p>
-        <div class="timeline">
-          <div><p class="y">[Ano]</p><p class="l">Nos conhecemos</p></div>
-          <div><p class="y">[Ano]</p><p class="l">O pedido</p></div>
-          <div><p class="y">2027</p><p class="l">O sim</p></div>
-        </div>
+      </div>
+    </div>
+    <div class="tl">
+      <span class="tl-line" aria-hidden="true"></span>
+      <span class="tl-fill" aria-hidden="true"></span>
+      <div class="tl-item">
+        <div class="tl-c tl-r"><h3>Nos conhecemos</h3></div>
+        <span class="tl-node">01</span>
+        <div class="tl-e"></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-e"></div>
+        <span class="tl-node">02</span>
+        <div class="tl-c"><h3>O pedido</h3></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-c tl-r"><p class="tl-y">21 . 08 . 2027</p><h3>O sim</h3><p class="tl-d">No Santuário de São João Batista, com quem a gente ama.</p></div>
+        <span class="tl-node">03</span>
+        <div class="tl-e"></div>
       </div>
     </div>
   </section>
@@ -203,11 +217,16 @@
     <div class="gifts-wrap">
       <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:16px">
         <div class="title"><p class="script">Lista de</p><h2>Presentes</h2></div>
-        <p class="lead">Escolha um presente para a casa nova ou para a lua de mel. Ao finalizar, você recebe um Pix com o valor do item — o carinho chega direto para nós.</p>
-        <div class="filters" role="group" aria-label="Filtrar presentes" id="filters"></div>
+        <p class="lead">Escolha um presente para a nossa casa nova. Ao finalizar, você recebe um Pix com o valor do item — e pode ajustar o valor, se preferir.</p>
       </div>
       <div class="gift-grid" id="gift-grid"></div>
-      <p class="pix-direct">Prefere outro valor? Faça um Pix direto: <strong id="pix-key"></strong></p>
+      <div class="lua-card">
+        <div class="lua-l">
+          <span class="lua-ic"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#9A7352" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></span>
+          <div><p class="script lua-t">Lua de mel</p><p class="lua-d">Quer ajudar na nossa viagem? Contribua com o valor que preferir — geramos o QR Code do Pix na hora.</p></div>
+        </div>
+        <button class="btn-gold" type="button" id="lua-btn">Contribuir com Pix</button>
+      </div>
     </div>
   </section>
 </main>
@@ -237,8 +256,12 @@
       <button class="btn-gold" type="submit" style="min-height:50px">Pagar com Pix</button>
     </form>
     <div class="step step-pix" id="step-pix" hidden>
+      <div class="field amt-field"><label for="pix-valor">Valor do Pix</label>
+        <div class="amt-row"><span aria-hidden="true">R$</span><input id="pix-valor" type="text" inputmode="decimal" autocomplete="off"></div>
+        <span class="amt-hint" id="amt-hint"></span>
+      </div>
       <p>Abra o app do seu banco e escaneie o QR Code ou use o Pix copia e cola.</p>
-      <div class="qr-box"><img id="qr-img" alt="QR Code Pix com o valor do presente"></div>
+      <div class="qr-box"><img id="qr-img" alt="QR Code Pix com o valor escolhido"><span id="qr-msg" hidden>Digite um valor para gerar o QR Code</span></div>
       <div class="copy-row">
         <label for="pix-code" class="sr-only">Código Pix copia e cola</label>
         <input id="pix-code" type="text" readonly>
@@ -256,7 +279,7 @@
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-<script src="qr.js?v=20261120f"></script>
-<script src="app.js?v=20261120f"></script>
+<script src="qr.js?v=20261120g"></script>
+<script src="app.js?v=20261120g"></script>
 </body>
 </html>
