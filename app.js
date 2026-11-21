@@ -256,6 +256,7 @@
     grid.innerHTML = '';
     GIFTS.forEach(function (g) {
       var art = el('article', 'gift');
+      art.addEventListener('click', function () { openGift(g); });
       var img = el('div', 'gift-img');
       img.appendChild(icon(g.icon, 64, '#9A7352', 1));
       img.appendChild(el('span', 'gift-cat', g.cat));
@@ -265,7 +266,7 @@
       body.appendChild(el('p', 'd', g.desc));
       body.appendChild(el('p', 'p', brl(g.price)));
       var btn = el('button', 'btn-gold', 'Presentear'); btn.type = 'button';
-      btn.addEventListener('click', function () { openGift(g); });
+      btn.addEventListener('click', function (e) { e.stopPropagation(); openGift(g); });
       body.appendChild(btn);
       art.appendChild(body);
       grid.appendChild(art);
@@ -318,6 +319,7 @@
     }
   }
   $('pix-valor').addEventListener('input', updatePix);
+  $('amt-edit').addEventListener('click', function () { var i = $('pix-valor'); i.focus(); i.select(); });
   $('step-form').addEventListener('submit', function (e) {
     e.preventDefault();
     // TODO: salvar nome + mensagem + presente (banco de dados / e-mail).
